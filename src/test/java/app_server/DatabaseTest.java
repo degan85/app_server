@@ -7,11 +7,24 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.ibk.app_server.config.ASdbConfig;
 import com.ibk.app_server.controller.ASMainController;
 import com.ibk.app_server.dao.User;
 
+@RunWith(SpringJUnit4ClassRunner.class)  
+//@ContextConfiguration(classes = ASMvcConfig.class)
+@ContextConfiguration(locations = {
+		"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml",
+		"file:src/main/webapp/WEB-INF/mvc-config.xml",
+		"file:src/main/webapp/WEB-INF/web.xml",
+		"file:src/main/webapp/WEB-INF/spring/root-context.xml"
+		})
 public class DatabaseTest {
 
 	ASMainController controller;
@@ -49,8 +62,14 @@ public class DatabaseTest {
 		assertThat(users.get(0).getName(), is(user.getName()));
 		assertThat(users.get(0).getPassword(), is(user.getPassword()));
 	}
-	
-	
+	@Ignore
+	@Test
+	public void 프로퍼티_연결_테스트() {
+		ASdbConfig dbConfig = new ASdbConfig();
+		String result = dbConfig.getProperties();
+		
+		assertThat(result, is("root"));
+	}
 	
 	
 	
