@@ -61,3 +61,5 @@ release.properties
 .settings/
 .classpath
 .project
+
+common.properties
