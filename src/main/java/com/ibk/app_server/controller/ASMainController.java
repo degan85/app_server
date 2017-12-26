@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,18 +24,58 @@ import com.ibk.app_server.dao.User;
 public class ASMainController {
 	Logger logger = LoggerFactory.getLogger(ASMainController.class);
 	
-	public Boolean selectTest() throws ClassNotFoundException, SQLException {
+	public List<User> selectTest() throws ClassNotFoundException, SQLException {
 		Class.forName("com.mysql.jdbc.Driver");
 		Connection c = DriverManager.getConnection("jdbc:mysql://localhost/spring_db?verifyServerCertificate=false&amp;useSSL=false", "root","inno100");
 		
 		PreparedStatement ps = c.prepareStatement("select * from users");
 		
 		ResultSet rs = ps.executeQuery();
-		if(rs.next()) {
-			System.out.println(rs.getString("id"));
-			return true;
+		
+		List<User> users = new ArrayList<User>();
+		
+		while (rs.next()) {
+			User user = new User();
+			user.setId(rs.getString("id"));
+			user.setName(rs.getString("name"));
+			user.setPassword(rs.getString("password"));
+			
+			users.add(user);
+			System.out.println(user.getId());
 		}
-		return false;
+		
+		rs.close();
+		ps.close();
+		c.close();
+		
+		return users;
+	}
+	
+	public void deleteUsers() throws ClassNotFoundException, SQLException {
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection c = DriverManager.getConnection("jdbc:mysql://localhost/spring_db?verifyServerCertificate=false&amp;useSSL=false", "root","inno100");
+		
+		PreparedStatement ps = c.prepareStatement("delete from users");
+		
+		ps.executeUpdate();
+		
+		ps.close();
+		c.close();
+	}
+
+	public void insertUser(User user) throws ClassNotFoundException, SQLException {
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection c = DriverManager.getConnection("jdbc:mysql://localhost/spring_db?verifyServerCertificate=false&amp;useSSL=false", "root","inno100");
+		
+		PreparedStatement ps = c.prepareStatement("insert into users(id, name, password) values(?,?,?)");
+		ps.setString(1, user.getId());
+		ps.setString(2, user.getName());
+		ps.setString(3, user.getPassword());
+		
+		ps.executeUpdate();
+		
+		ps.close();
+		c.close();
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
@@ -49,6 +91,7 @@ public class ASMainController {
 		System.out.println("ssssss");
 		return "login";
 	}
+
 	
 	
 	
