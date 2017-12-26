@@ -9,6 +9,15 @@ local.properties
 .settings/
 .loadpath
 .recommenders
+.gradle
+
+### Maven ###
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
 
 # External tool builders
 .externalToolBuilders/
@@ -47,3 +56,8 @@ local.properties
 .cache-main
 .scala_dependencies
 .worksheet
+
+# eclipse project file
+.settings/
+.classpath
+.project
