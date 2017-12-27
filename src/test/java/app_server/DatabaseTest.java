@@ -4,41 +4,39 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.ibk.app_server.config.ASMvcConfig;
 import com.ibk.app_server.config.ASdbConfig;
 import com.ibk.app_server.controller.ASMainController;
 import com.ibk.app_server.dao.User;
 
-@RunWith(SpringJUnit4ClassRunner.class)  
-//@ContextConfiguration(classes = ASMvcConfig.class)
-@ContextConfiguration(locations = {
-		"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml",
-		"file:src/main/webapp/WEB-INF/mvc-config.xml",
-		"file:src/main/webapp/WEB-INF/web.xml",
-		"file:src/main/webapp/WEB-INF/spring/root-context.xml"
-		})
+@WebAppConfiguration
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = ASMvcConfig.class)
 public class DatabaseTest {
-
-	ASMainController controller;
+	
+	@Autowired ASMainController controller;
+	@Autowired ASdbConfig dbConfig;
 	
 	@Before
 	public void setUp() {
-		controller = new ASMainController();
 	}
 	
 	@Test
 	public void DB_검색_test() throws ClassNotFoundException, SQLException {
 		controller.deleteUsers();
-		
-		List<User> users = controller.selectTest(); 
+		List<Map<String,String>> users = controller.selectUsers(); 
 		assertThat(users.size(), is(0));
 	}
 	
@@ -47,27 +45,27 @@ public class DatabaseTest {
 		
 		controller.deleteUsers();
 		
-		List<User> users = controller.selectTest(); 
+		List<Map<String,String>> users = controller.selectUsers();
 		assertThat(users.size(), is(0));
 		
-		User user = new User();
-		user.setId("id_1");
-		user.setName("user_name1");
-		user.setPassword("user_password1");
-		controller.insertUser(user);
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("id", "id_1");
+		param.put("name", "user_name1");
+		param.put("password", "user_password1");
+		controller.insertUser(param);
 		
-		users = controller.selectTest();
+		users = controller.selectUsers();
+		
 		assertThat(users.size(), is(1));
-		assertThat(users.get(0).getId(), is(user.getId()));
-		assertThat(users.get(0).getName(), is(user.getName()));
-		assertThat(users.get(0).getPassword(), is(user.getPassword()));
+		
+		assertThat(users.get(0).get("Id"), is(param.get("id")));
+		assertThat(users.get(0).get("Name"), is(param.get("name")));
+		assertThat(users.get(0).get("Password"), is(param.get("password")));
 	}
-	@Ignore
 	@Test
 	public void 프로퍼티_연결_테스트() {
-		ASdbConfig dbConfig = new ASdbConfig();
 		String result = dbConfig.getProperties();
-		
+
 		assertThat(result, is("root"));
 	}
 	

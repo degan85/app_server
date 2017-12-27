@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.ibk.app_server.mapper.mysql.MySqlMapper">
+
+	<delete id="deleteUsers">
+		DELETE FROM users
+	</delete>
+
+	<select id="selectUsers" resultType="java.util.HashMap">
+		SELECT * FROM users
+	</select>
+	
+	<insert id="insertUser" parameterType="java.util.HashMap">
+		INSERT INTO users(id, name, password) VALUES(#{id},#{name},#{password})
+	</insert>
+</mapper>

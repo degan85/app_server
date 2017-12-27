@@ -77,6 +77,7 @@ public class ASMvcConfig extends WebMvcConfigurerAdapter{
 	@Bean
 	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfiguer() {
 		PropertySourcesPlaceholderConfigurer pspc = new PropertySourcesPlaceholderConfigurer();
+		// false로 할 경우 해당 내용이 프로퍼티에 없으면 exception 일어남
 		pspc.setIgnoreUnresolvablePlaceholders(true);
 		
 		return pspc;
