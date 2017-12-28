@@ -69,14 +69,24 @@ public class DatabaseTest {
 		assertThat(result, is("root"));
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@Test
+	public void user_dao_테스트() {
+		controller.deleteUsers();
+		
+		List<User> users = controller.selectUsersDao();
+		assertThat(users.size(), is(0));
+		
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("id", "id_1");
+		param.put("name", "user_name1");
+		param.put("password", "user_password1");
+		controller.insertUser(param);
+		
+		users = controller.selectUsersDao();
+		assertThat(users.size(), is(1));
+		
+		assertThat(users.get(0).getId(), is(param.get("id")));
+		assertThat(users.get(0).getName(), is(param.get("name")));
+		assertThat(users.get(0).getPassword(), is(param.get("password")));
+	}
 }

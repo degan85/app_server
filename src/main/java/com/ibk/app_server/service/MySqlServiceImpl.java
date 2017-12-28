@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ibk.app_server.dao.User;
 import com.ibk.app_server.mapper.mysql.MySqlMapper;
 
 @Service
@@ -27,6 +28,11 @@ public class MySqlServiceImpl implements MySqlService{
 
 	public Integer insertUser(Map<String,Object> param) {
 		return mySqlMapper.insertUser(param);
+	}
+
+	@Override
+	public List<User> selectUsersDao() {
+		return mySqlMapper.selectUsersDao();
 	}
 
 }

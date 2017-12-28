@@ -64,7 +64,6 @@ public class ASdbConfig {
 	}
 	
 	public String getProperties() {
-		System.out.println("username : "+username);
 		return username;
 	}
 	

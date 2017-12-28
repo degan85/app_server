@@ -1,6 +1,5 @@
 package com.ibk.app_server.controller;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.ibk.app_server.dao.User;
 import com.ibk.app_server.service.MySqlService;
 
 @Controller
@@ -24,16 +24,20 @@ public class ASMainController {
 	
 	Logger logger = LoggerFactory.getLogger(ASMainController.class);
 	
-	public List<Map<String,String>> selectUsers() throws ClassNotFoundException, SQLException {
+	public List<Map<String,String>> selectUsers() {
 		return mySqlService.selectUsers();
 	}
 	
-	public Integer deleteUsers() throws ClassNotFoundException, SQLException {
+	public Integer deleteUsers() {
 		return mySqlService.deleteUsers();
 	}
 
-	public Integer insertUser(Map<String, Object> param) throws ClassNotFoundException, SQLException {
+	public Integer insertUser(Map<String, Object> param) {
 		return mySqlService.insertUser(param);
+	}
+	
+	public List<User> selectUsersDao() {
+		return mySqlService.selectUsersDao();
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
