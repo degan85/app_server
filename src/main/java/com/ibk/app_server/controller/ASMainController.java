@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,10 +54,63 @@ public class ASMainController {
 		System.out.println("ssssss");
 		return "login";
 	}
+	
+	
+	
+	/*
+	 * 401 ERROR
+	 */
+	@RequestMapping(value = "/error401", method = RequestMethod.GET)
+	public String error401(HttpServletResponse res, Model model) {
+		res.setStatus(HttpServletResponse.SC_OK);
+		model.addAttribute("contents","error/error401");
+		
+		return "/error401";
+	}
+	
+	/*
+	 * 403 ERROR
+	 */
+	@RequestMapping(value = "/error403", method = RequestMethod.GET)
+	public String error403(HttpServletResponse res, Model model) {
+		res.setStatus(HttpServletResponse.SC_OK);
+		model.addAttribute("contents","error/error403");
+		
+		return "/error403";
+	}
+	
+	/*
+	 * 404 ERROR
+	 */
+	@RequestMapping(value = "/error404", method = RequestMethod.GET)
+	public String error404(HttpServletResponse res, Model model) {
+		res.setStatus(HttpServletResponse.SC_OK);
+		model.addAttribute("contents","error/error404");
+		
+		return "/error404";
+	}
 
+	/*
+	 * 500 ERROR
+	 */
+	@RequestMapping(value = "/error500", method = RequestMethod.GET)
+	public String error500(HttpServletResponse res, Model model) {
+		res.setStatus(HttpServletResponse.SC_OK);
+		model.addAttribute("contents","error/error500");
+		
+		return "/error500";
+	}
 	
-	
-	
+	/*
+	 * 501 ERROR
+	 */
+	@RequestMapping(value = "/error501", method = RequestMethod.GET)
+	public String error501(HttpServletResponse res, Model model) {
+		res.setStatus(HttpServletResponse.SC_OK);
+		model.addAttribute("contents","error/error501");
+		
+		return "/error501";
+	}
 	
 	
 }
