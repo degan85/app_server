@@ -1,5 +1,6 @@
 package com.ibk.app_server.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ibk.app_server.dao.User;
 import com.ibk.app_server.service.MySqlService;
@@ -49,12 +52,26 @@ public class ASMainController {
 	}
 	
 	@RequestMapping(value = "/ss", method = RequestMethod.GET)
-	public String testSS(HttpServletRequest res, Model model) {
+	public String testSS(HttpServletRequest req, Model model) {
 		logger.debug("Hello World!!");
 		System.out.println("ssssss");
+		List<Map<String,String>> result = mySqlService.selectUsers();
+		req.setAttribute("test", "success!!");
+		model.addAttribute("testmodel", "modelObject");
 		return "login";
 	}
 	
+	@RequestMapping(value = "/ajaxTest", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> ajaxTest(@RequestParam("inputValue") String value1) {
+		Map<String, Object> jsonObject = new HashMap<String, Object>();
+		
+		System.out.println("입력된 값 : "+value1);
+		List<Map<String,String>> result = mySqlService.selectUsers(); 
+		jsonObject.put("result", result); 
+		
+		return jsonObject;
+ 	}
 	
 	
 	/*

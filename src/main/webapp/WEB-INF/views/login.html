@@ -1,10 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js" ></script>
 <meta charset="EUC-KR">
 <title>Insert title here</title>
 </head>
 <body>
 	<h1>Login</h1>
+	<form onsubmit="return false;">
+		<input type="text" id="inputValue">
+		<button type="submit" id="submitc">입력</button>
+	</form>
 </body>
 </html>
+
+<script>
+	console.log("hi");
+	
+	$('document').ready(function() {
+		console.log('click!');
+		
+		$("#submitc").click(function(){
+		    $.ajax({
+		    	url: "ajaxTest",
+		    	type: "POST",
+		    	data: {
+		    		'inputValue' : $("#inputValue").val()
+		    	},
+		    	success: function(result){
+		        	console.log(result);
+		    	},
+		    	error: function(state) {
+		    		console.log(state)
+		    	}
+		    });
+		});
+	})
+</script>

@@ -173,6 +173,13 @@
 			<version>${jstl.version}</version>
 		</dependency>
 		
+		<!-- MySql -->
+		<dependency>
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		    <version>5.1.38</version>
+		</dependency>
+		
 		<!-- MyBatis -->
 		<dependency>
 			<groupId>org.mybatis</groupId>
